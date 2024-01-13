@@ -8,3 +8,9 @@ Thanks to Peter Shirley for reviving my latent interest in Ray Tracing in "One w
 ##  Language and environment.
 
 C++, of course, 'cause it's "what I do."  Ditto for Vim and Make on my trusty Macbook Air.  
+Instead of Cucumber, I use Googletest, largely because its roots are in CppUnit, which I have
+used, and because I could find no real help getting started with Cucumber.  The Gherkin
+used in the text will gguide my Googletests.
+
+## Ch. 01: Tuples,  points, and vectors
+
