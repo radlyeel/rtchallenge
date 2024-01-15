@@ -1,4 +1,6 @@
 #include <cmath>
+#include <iostream>
+// #include <ostream>
 
 class tuple {
     public:
@@ -7,7 +9,11 @@ class tuple {
             x(_x), y(_y), z(_z), w(_w) {}
         tuple(tuple &t) : x(t.x), y(t.y), z(t.z), w(t.w) {}
         inline tuple operator=(const tuple &t)  {
-            return tuple(t.x, t.y, t.z, t.w);
+           this->x = t.x; 
+           this->y = t.y; 
+           this->z = t.z; 
+           this->w = t.w; 
+           return *this;
         }
 
         double x;
@@ -17,7 +23,7 @@ class tuple {
 };
 
 // I/O operators
-inline std::ostream& operator<<(std::ostream &out, tuple &t) {
+inline std::ostream& operator<<(std::ostream &out, const tuple &t) {
     return out << t.x << ' ' << t.y << ' ' << t.z << ' ' << t.w;
 }
 
@@ -96,6 +102,8 @@ class point : public tuple {
     public:
         point() {}
         point(double _x, double _y, double _z) : tuple(_x, _y, _z, 1.0) {}
+        point(const point & p) : tuple(p.x, p.y, p.z, 1.0) {}
+        point(const tuple & t) : tuple(t.x, t.y, t.z, t.w) {}
 };
 
 
@@ -103,7 +111,7 @@ class vector : public tuple {
     public:
         vector() {}
         vector(double _x, double _y, double _z) : tuple(_x, _y, _z, 0) {}
-        // vector(const tuple &t) :tuple(t.x, t.y, t.z, 0) {} 
+        vector(const tuple &t) :tuple(t.x, t.y, t.z, 0) {} 
 };
 
 inline vector cross(const vector &u, const vector &v) {
