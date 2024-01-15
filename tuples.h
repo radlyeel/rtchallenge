@@ -6,6 +6,9 @@ class tuple {
         tuple(double _x, double _y, double _z, double _w) :
             x(_x), y(_y), z(_z), w(_w) {}
         tuple(tuple &t) : x(t.x), y(t.y), z(t.z), w(t.w) {}
+        inline tuple operator=(const tuple &t)  {
+            return tuple(t.x, t.y, t.z, t.w);
+        }
 
         double x;
         double y;
@@ -19,7 +22,7 @@ inline std::ostream& operator<<(std::ostream &out, tuple &t) {
 }
 
 inline tuple operator-(const tuple &t) {
-    return tuple(-t.x, -t.y, -t.z, t.w);
+    return tuple(-t.x, -t.y, -t.z, -t.w);
 }
 
 // Equality operator
@@ -63,7 +66,7 @@ inline tuple operator*(const double &s, const tuple &t) {
     res.x = s * t.x;
     res.y = s * t.y;
     res.z = s * t.z;
-    res.w = t.w;
+    res.w = s * t.w;
     return res;
 }
 
@@ -76,23 +79,23 @@ inline tuple operator/(const tuple &t, const double &s) {
 }
 
 inline double magnitude(const tuple &t) {
-    return sqrt(t.x*t.x + t.y*t.y + t.z*t.z);
+    return sqrt(t.x*t.x + t.y*t.y + t.z*t.z + t.w*t.w);
 }
 
 inline tuple normalize(const tuple &t) {
     return t/magnitude(t); 
 }
+
+inline double dot(const tuple &u, const tuple &v) {
+    return u.x * v.x + u.y * v.y + u.z * v.z + u.w * v.w;
+}
+
+
 class point : public tuple {
 
     public:
         point() {}
         point(double _x, double _y, double _z) : tuple(_x, _y, _z, 1.0) {}
-        inline  void operator=(const tuple &t)  {
-            x = t.x; 
-            y = t.y;
-            z = t.z;
-            w = t.w;
-        }
 };
 
 
@@ -100,11 +103,9 @@ class vector : public tuple {
     public:
         vector() {}
         vector(double _x, double _y, double _z) : tuple(_x, _y, _z, 0) {}
-        vector(const tuple &t) :tuple(t.x, t.y, t.z, 0) {} 
-        inline  void operator=(const tuple &t)  {
-            x = t.x; 
-            y = t.y;
-            z = t.z;
-            w = t.w;
-        }
+        // vector(const tuple &t) :tuple(t.x, t.y, t.z, 0) {} 
 };
+
+inline vector cross(const vector &u, const vector &v) {
+    return vector(u.y*v.z - u.z*v.y, u.z*v.x - u.x*v.z, u.x*v.y - u.y*v.x);
+}
