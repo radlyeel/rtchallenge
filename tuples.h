@@ -1,3 +1,5 @@
+#include <cmath>
+
 class tuple {
     public:
         tuple() {}
@@ -14,6 +16,10 @@ class tuple {
 // I/O operators
 inline std::ostream& operator<<(std::ostream &out, tuple &t) {
     return out << t.x << ' ' << t.y << ' ' << t.z << ' ' << t.w;
+}
+
+inline tuple operator-(const tuple &t) {
+    return tuple(-t.x, -t.y, -t.z, t.w);
 }
 
 // Equality operator
@@ -52,10 +58,35 @@ inline tuple operator-(const tuple &t1, const tuple &t2) {
     return res;
 }
 
+inline tuple operator*(const double &s, const tuple &t) {
+    tuple res; 
+    res.x = s * t.x;
+    res.y = s * t.y;
+    res.z = s * t.z;
+    res.w = t.w;
+    return res;
+}
+
+inline tuple operator*(const tuple &t, const double &s) {
+    return s * t;
+}
+
+inline tuple operator/(const tuple &t, const double &s) {
+    return (1/s) * t;
+}
+
+inline double magnitude(const tuple &t) {
+    return sqrt(t.x*t.x + t.y*t.y + t.z*t.z);
+}
+
+inline tuple normalize(const tuple &t) {
+    return t/magnitude(t); 
+}
 class point : public tuple {
+
     public:
         point() {}
-        point(double _x, double _y, double _z) :tuple(_x, _y, _z, 1.0) {}
+        point(double _x, double _y, double _z) : tuple(_x, _y, _z, 1.0) {}
         inline  void operator=(const tuple &t)  {
             x = t.x; 
             y = t.y;
@@ -68,7 +99,8 @@ class point : public tuple {
 class vector : public tuple {
     public:
         vector() {}
-        vector(double _x, double _y, double _z) :tuple(_x, _y, _z, 0.0) {}
+        vector(double _x, double _y, double _z) : tuple(_x, _y, _z, 0) {}
+        vector(const tuple &t) :tuple(t.x, t.y, t.z, 0) {} 
         inline  void operator=(const tuple &t)  {
             x = t.x; 
             y = t.y;
