@@ -1,5 +1,5 @@
-PROG = tracetest
-OBJS = tupletest.o
+# PROG = tracetest
+OBJS = $(PROG).o
 
 CXX = g++
 

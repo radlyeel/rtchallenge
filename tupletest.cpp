@@ -5,10 +5,6 @@
 
 TEST(TupleTest, addTest)
 {
-    std::cout << tuple(1, 2, 3, 4);
-    // std::cout << point(1, 2, 3);
-    // std::cout << vector(2, 3, 4);
-    // Add reasonable type combinations
     EXPECT_EQ(tuple(3, -2, 5, 1) + tuple(-2, 3, 1, 0), tuple(1, 1, 6, 1));
     EXPECT_EQ(vector(3, -2, 5) + point(-2, 3, 1), point(1, 1, 6));
     EXPECT_EQ(vector(3, -2, 5) + vector(-2, 3, 1), vector(1, 1, 6));
